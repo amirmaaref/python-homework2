@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ contact.name }} {{ contact.last_name }}</title>
+</head>
+<body>
+<h1>{{ contact.name }} {{ contact.last_name }} Call History</h1>
+<a href="{% url 'index-url' %}"><h2>Home</h2></a>
+
+
+<div>
+    <h3>Add Call History</h3>
+    <form action="{% url 'add-history' contact.id %}" method="post">
+        {% csrf_token %}
+
+        <h5>Number: </h5><input type="text" name="number">
+        <h5>Time: </h5><input type="number" name="time">
+        <h5>Type: </h5>
+        <select name="type">
+            <option value="SE">Sent</option>
+            <option value="RJ">Rejected</option>
+            <option value="RC">Received</option>
+            <option value="MS">Missed</option>
+        </select>
+
+        <input type="submit" value="Add">
+    </form>
+</div>
+
+<table>
+    {% for history in histories %}
+        <tr>
+            <td>{{ history.history_date_time }}</td>
+            <td>{{ history.number }}</td>
+            <td>{{ history.get_history_type_display }}</td>
+            <td>{{ history.history_time }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

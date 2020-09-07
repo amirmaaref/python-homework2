@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ contact.name }} {{ contact.last_name }}</title>
+</head>
+<body>
+<h1>{{ contact.name }} {{ contact.last_name }} Information</h1>
+<a href="{% url 'index-url' %}"><h2>Home</h2></a>
+
+<div>
+    <h3>Add Phone Number</h3>
+    <form action="{% url 'add-number' contact.id %}" method="post">
+        {% csrf_token %}
+        <h5>Number Name: </h5><input type="text" name="name">
+        <h5>Phone Number: </h5><input type="text" name="number">
+        <input type="submit" value="Add">
+    </form>
+</div>
+
+<table style="width: 800px">
+    {% for number in numbers %}
+        <tr>
+            <td>{{ number.name }}</td>
+            <td>{{ number.number }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

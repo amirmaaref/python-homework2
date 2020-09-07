@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h3>Add Contact</h3>
+
+    <form action="{% url 'add-contact-url' %}" method="post">
+        {% csrf_token %}
+        <h5>Contact Name: </h5><input type="text" name="name">
+        <h5>Contact Last Name: </h5><input type="text" name="last_name">
+
+        {#        <h5>Profile Photo Directory: </h5><input type="text">#}
+        {#        <h5>Birthday: </h5><input type="text">#}
+        <input type="submit" value="Add">
+    </form>
+
+</div>
+
+<table>
+
+    {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.last_name }}</td>
+            <td>{{ contact.profile_photo }}</td>
+            <td>
+                {% if contact.birth_day %}
+                    {{ contact.birth_day }}
+                {% else %}
+                    Birthday not set
+                {% endif %}
+            </td>
+            <td><a href="{% url 'view-contact' contact.id %}">{{ contact.name }} Phone Numbers</a></td>
+            <td><a href="{% url 'view-history' contact.id %}">{{ contact.name }} View Call history</a></td>
+        </tr>
+    {% endfor %}
+
+
+</table>
+</body>
+</html>
